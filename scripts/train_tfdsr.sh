@@ -1,0 +1,17 @@
+CUDA_VISIBLE_DEVICES="0," accelerate launch train_tfdsr.py \
+--pretrained_model_name_or_path="preset/models/stable-diffusion-2-base" \
+--output_dir="preset/models/checkpoint-600" \
+--root_folders "preset/data/train" \ 
+--ram_ft_path 'preset/models/DAPE.pth' \
+--enable_xformers_memory_efficient_attention \
+--mixed_precision="fp16" \
+--resolution=512 \
+--learning_rate=5e-5 \
+--gradient_accumulation_steps=2 \
+--null_text_ratio=0.5 \
+--dataloader_num_workers=0 \
+--controlnet_model_name_or_path preset/models/seesr \
+--unet_model_name_or_path preset/models/seesr \
+--train_batch_size 16 \
+--num_train_epochs 1 \
+--checkpointing_steps 600
