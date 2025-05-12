@@ -19,7 +19,6 @@ class SELayer(nn.Module):
         return x * y.expand_as(x)
     
 class Frequency_Spectrum_Dynamic_Aggregation(nn.Module):
-    "AEM_FSDA"
     def __init__(self, nc):
         super(Frequency_Spectrum_Dynamic_Aggregation, self).__init__()
         self.processmag = nn.Sequential(
@@ -57,9 +56,9 @@ class Frequency_Spectrum_Dynamic_Aggregation(nn.Module):
         x_out = torch.complex(real, imag)
         return x_out
 
-class AEM(nn.Module):
+class APEM(nn.Module):
     def __init__(self, nc):
-        super(AEM, self).__init__()
+        super(APEM, self).__init__()
         self.fsda = Frequency_Spectrum_Dynamic_Aggregation(nc)
 
     def forward(self, x, useAPComp):
@@ -183,14 +182,3 @@ class Fused_Fourier_Conv_Mixer(nn.Module):
         x = self.ca(x) * x
         return x
 
-
-
-# class AEM(nn.Module):
-#     def __init__(self, dim):
-#         super(AEM, self).__init__()
-#         self.ffcm = Fused_Fourier_Conv_Mixer(dim).to(dtype=torch.float32)
-
-#     def forward(self, x):
-#         _, _, H, W = x.shape
-#         x = self.ffcm(x)
-#         return x
