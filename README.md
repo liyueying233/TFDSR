@@ -39,4 +39,4 @@ This project is based on [StableSR](https://github.com/IceClear/StableSR) and [S
 
 
 ## 📧 Contact
-If you have any questions, please feel free to contact: `rong-yuan.wu@connect.polyu.hk`
+If you have any questions, please feel free to contact: `liyueying@zju.edu.cn`

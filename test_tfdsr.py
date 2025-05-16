@@ -6,7 +6,6 @@
 import os
 import sys
 sys.path.append(os.getcwd())
-import cv2
 import glob
 import argparse
 import numpy as np
