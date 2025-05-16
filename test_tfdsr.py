@@ -1,8 +1,3 @@
-'''
- * SeeSR: Towards Semantics-Aware Real-World Image Super-Resolution 
- * Modified from diffusers by Rongyuan Wu
- * 24/12/2023
-'''
 import os
 import sys
 sys.path.append(os.getcwd())
@@ -22,7 +17,7 @@ from diffusers.utils import check_min_version
 from diffusers.utils.import_utils import is_xformers_available
 from transformers import CLIPTextModel, CLIPTokenizer, CLIPImageProcessor
 
-from pipelines.pipeline_seesr import StableDiffusionControlNetPipeline
+from pipelines.pipeline_tfdsr import StableDiffusionControlNetPipeline
 from utils.misc import load_dreambooth_lora
 from utils.wavelet_color_fix import wavelet_color_fix, adain_color_fix
 
@@ -67,7 +62,7 @@ def load_state_dict_diffbirSwinIR(model: nn.Module, state_dict: Mapping[str, Any
     model.load_state_dict(state_dict, strict=strict)
 
 
-def load_seesr_pipeline(args, accelerator, enable_xformers_memory_efficient_attention):
+def load_tfdsr_pipeline(args, accelerator, enable_xformers_memory_efficient_attention):
     
     from models.controlnet import ControlNetModel
     from models.unet_2d_condition import UNet2DConditionModel
@@ -79,8 +74,8 @@ def load_seesr_pipeline(args, accelerator, enable_xformers_memory_efficient_atte
     tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_path, subfolder="tokenizer")
     vae = AutoencoderKL.from_pretrained(args.pretrained_model_path, subfolder="vae")
     feature_extractor = CLIPImageProcessor.from_pretrained(f"{args.pretrained_model_path}/feature_extractor")
-    unet = UNet2DConditionModel.from_pretrained(args.seesr_model_path, subfolder="unet")
-    controlnet = ControlNetModel.from_pretrained(args.seesr_model_path, subfolder="controlnet")
+    unet = UNet2DConditionModel.from_pretrained(args.tfdsr_model_path, subfolder="unet")
+    controlnet = ControlNetModel.from_pretrained(args.tfdsr_model_path, subfolder="controlnet")
     
     # Freeze vae and text_encoder
     vae.requires_grad_(False)
@@ -161,9 +156,9 @@ def main(args, enable_xformers_memory_efficient_attention=True,):
     # We need to initialize the trackers we use, and also store our configuration.
     # The trackers initializes automatically on the main process.
     if accelerator.is_main_process:
-        accelerator.init_trackers("SeeSR")
+        accelerator.init_trackers("tfdsr")
 
-    pipeline = load_seesr_pipeline(args, accelerator, enable_xformers_memory_efficient_attention)
+    pipeline = load_tfdsr_pipeline(args, accelerator, enable_xformers_memory_efficient_attention)
     model = load_tag_model(args, accelerator.device)
  
     if accelerator.is_main_process:
@@ -238,7 +233,7 @@ def main(args, enable_xformers_memory_efficient_attention=True,):
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--seesr_model_path", type=str, default=None)
+    parser.add_argument("--tfdsr_model_path", type=str, default=None)
     parser.add_argument("--ram_ft_path", type=str, default=None)
     parser.add_argument("--pretrained_model_path", type=str, default=None)
     parser.add_argument("--prompt", type=str, default="") # user can add self-prompt to improve the results

@@ -16,7 +16,7 @@ from diffusers import AutoencoderKL, DDPMScheduler
 from diffusers.utils.import_utils import is_xformers_available
 from transformers import CLIPTextModel, CLIPTokenizer, CLIPImageProcessor
 
-from pipelines.pipeline_seesr import StableDiffusionControlNetPipeline
+from pipelines.pipeline_tfdsr import StableDiffusionControlNetPipeline
 
 from utils.wavelet_color_fix import wavelet_color_fix
 
