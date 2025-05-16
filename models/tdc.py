@@ -1,14 +1,15 @@
 import numpy as np
 
 def gen_split(y1, y2):
-    # 计算导数数组
+    # gradient
     x = range(len(y1))
     derta_y1 = np.gradient(y1,x)
     derta_y2 = np.gradient(y2,x)
 
-    # 贪心策略
     greedy_split = -1
     greedy_val = -1
+
+    # gen max score Scomp
     for i in range(len(x)):
         gi_l = 0
         gi_r = 0
@@ -26,6 +27,7 @@ def gen_split(y1, y2):
     
     return greedy_split
 
+# MSE Source (need to calculate)
 A = [0.07815, 0.07667, 0.07350, 0.06968, 0.06457, 0.05809, 0.04816, 0.03223, 0.01705, 0.01005]
 P = [0.06389, 0.05617, 0.04806, 0.04096, 0.03598, 0.03068, 0.02545, 0.01936, 0.01398, 0.01005]
 

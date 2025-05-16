@@ -1,4 +1,4 @@
-python test_tfdsr.py \
+CUDA_VISIBLE_DEVICES=0 python test_tfdsr.py \
 --pretrained_model_path preset/models/stable-diffusion-2-base \
 --seesr_model_path preset/models/checkpoint-600 \
 --ram_ft_path preset/models/DAPE.pth \

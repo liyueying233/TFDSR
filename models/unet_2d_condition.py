@@ -987,25 +987,19 @@ class UNet2DConditionModel(ModelMixin, ConfigMixin, UNet2DConditionLoadersMixin)
         if is_controlnet:
             sample = sample + mid_block_additional_residual
 
-        # # 5. up
-        # if timestep > 600:
-        #     useAPComp = "P"
-        # else:
-        #     useAPComp = "A"
+        # 5. up
+        # =================== test =====================
+        if timestep > 600:
+            useAPComp = "P"
+        else:
+            useAPComp = "A"
             
-        # if timestep > 500:
-        #     useHLComp = "L"
-        # else:
-        #     useHLComp = "H"
-
-        # IJCAI Rebuttal
-        if timestep > 900:
+        if timestep > 500:
             useHLComp = "L"
         else:
             useHLComp = "H"
-        useAPComp = ""
 
-        # train
+        # =================== train =====================
         # useAPComp = "AP"
         # useHLComp = "HL"
 
